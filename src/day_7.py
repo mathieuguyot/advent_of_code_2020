@@ -1,25 +1,24 @@
 import re
-from graphviz import Digraph
 
 file = open('./data/day_7.txt',mode='r')
 lines = file.read().splitlines()
 file.close()
 
 bag_graph = {}
-pwd_regex = re.compile(r'(\d+) (\w+ \w+) bag')
+pwd_regex = re.compile(r'(\d+) (\w+ \w+)')
 for line in lines:
     bag_name = line.split()[0] + " " + line.split()[1]
     bag_graph[bag_name] = []
     for (number, name) in re.findall(pwd_regex, line):
         bag_graph[bag_name].append((int(number), name))
 
-def can_hold_shiny_gold_bag(bag_graph, bag_content) -> bool:
+def can_hold_shiny_gold_bag(bag_graph, bag_content, bag_name) -> bool:
     if len(bag_content) == 0:
         return False
     for (_, name) in bag_content:
-        if name == "shiny gold":
+        if name == bag_name:
             return True
-        elif can_hold_shiny_gold_bag(bag_graph, bag_graph[name]):
+        elif can_hold_shiny_gold_bag(bag_graph, bag_graph[name], bag_name):
             return True
     return False
 
@@ -32,7 +31,7 @@ def get_bag_number(bag_graph, bag_content) -> int:
 
 part_1_count = 0
 for key, value in bag_graph.items():
-    can_hold = can_hold_shiny_gold_bag(bag_graph, value)
+    can_hold = can_hold_shiny_gold_bag(bag_graph, value, "shiny gold")
     part_1_count += 1 if can_hold else 0
 part_2_count = get_bag_number(bag_graph, bag_graph["shiny gold"])
 

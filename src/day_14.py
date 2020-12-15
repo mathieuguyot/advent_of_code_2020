@@ -67,8 +67,9 @@ def run_program_part_2(program, index, mask, memory):
 part_1_res = run_program_part_1(program, 0, "", {})
 part_2_res = run_program_part_2(program, 0, "", {})
 
-print(part_1_res)
-print(part_2_res)
+print("DAY XIV")
+print("Part I :", part_1_res)
+print("Part II :", part_2_res)
 
 assert 4886706177792 == part_1_res
 assert 3348493585827 == part_2_res
